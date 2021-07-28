@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 require("dotenv").config(); 
 
-async function addUser(name,password)
+async function addUser(userModel,name,password)
 {
 
 // Connect to Db
@@ -13,28 +13,19 @@ mongoose.connect(
     }
   )
   
-  // define new Schema
-  const userSchema = new mongoose.Schema(
-    {
-      userName:String,
-      password:String
   
-    }
-  )
-  
-  // define the model
-  const user=mongoose.model('user',userSchema)
   
   // add a document
-  let tempUser=new user(
+  let tempUser=new userModel(
     {
       userName:name,
       password:password
   
     }
   )
+
   await tempUser.save()
-  console.log('saved')
+  console.log('Successfully saved User')
 }
   
 module.exports =  addUser

@@ -4,20 +4,40 @@ const port = 3000
 
 
 // functions for mongodb
-// Adding a User
+
+// All Models
+// Define the model IN SINGULAR  ex :'user' -> Collection of users will be created
+const userModel= require('./actions/dbActions/models/userModel')
+const productModel=require('./actions/dbActions/models/productModel')
+
+
+// import mongodb actions (to do these actions pass in the models each time)
 const  addUser = require('./actions/dbActions/addUser')
 const addProduct=require('./actions/dbActions/addProduct')
-
-// add  a new user to mongo db
-addUser('ajaynairnew',123)
-addProduct('something','2','2222','asdasd','123123')
+const showAllUsers=require('./actions/dbActions/showAllUsers')
+const showAllProducts=require('./actions/dbActions/showAllProducts')
 
 
+// debug actions
+// addUser(userModel,'aja',123)
+// addProduct(productModel,'somet','2','22222','asdasd','123123')
 
 
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+
+
+
+
+// Routes
+
+app.get('/users', async (req, res) => {
+  let users=await showAllUsers(userModel)
+  res.send({users:users})
+})
+
+app.get('/products', async (req, res) => {
+  let products=await showAllProducts(productModel)
+  res.send({products:products})
 })
 
 app.listen(port, () => {
