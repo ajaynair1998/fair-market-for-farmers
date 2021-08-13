@@ -1,44 +1,24 @@
 const express = require('express')
+const cors=require('cors')
 const app = express()
-const port = 3000
+const passport = require('passport')
+const port = 5000
 
 
-// functions for mongodb
-
-// All Models
-// Define the model IN SINGULAR  ex :'user' -> Collection of users will be created
-const userModel= require('./actions/dbActions/models/userModel')
-const productModel=require('./actions/dbActions/models/productModel')
+// importing routes
+let routes=require('./routes/index')
 
 
-// import mongodb actions (to do these actions pass in the models each time)
-const  addUser = require('./actions/dbActions/addUser')
-const addProduct=require('./actions/dbActions/addProduct')
-const showAllUsers=require('./actions/dbActions/showAllUsers')
-const showAllProducts=require('./actions/dbActions/showAllProducts')
-
-
-// debug actions
-// addUser(userModel,'aja',123)
-// addProduct(productModel,'somet','2','22222','asdasd','123123')
-
-
-
-
-
+// middlewares
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(cors())
 
 
 // Routes
 
-app.get('/users', async (req, res) => {
-  let users=await showAllUsers(userModel)
-  res.send({users:users})
-})
+app.use('/',routes)
 
-app.get('/products', async (req, res) => {
-  let products=await showAllProducts(productModel)
-  res.send({products:products})
-})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
