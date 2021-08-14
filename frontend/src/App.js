@@ -4,6 +4,7 @@ import './App.css';
 
 // importing pages
 import Register from './components/register'
+import Login from './components/login'
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
 
         <Route path='/register'>
           <Register />
+        </Route>
+
+        <Route path='/login'>
+          <Login />
         </Route>
         
       </Switch>
