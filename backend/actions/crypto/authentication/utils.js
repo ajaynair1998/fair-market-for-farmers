@@ -24,8 +24,10 @@ function genPassword(password)
     }
 }
 
-function issueJwt(user)
+async function issueJwt(userObject)
 {
+    let user =await userObject
+
     const _id=user._id
 
     const expiresIn='1d'

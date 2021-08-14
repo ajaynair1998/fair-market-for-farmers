@@ -3,7 +3,7 @@ const mongoDbClass = require('../../dbActions/index')
 const mongoDbOperations=new mongoDbClass()
 
 
-// adds a user if he doesnt exist
+// adds a user if he doesnt exist and returns the user object even if he exists or if newly added
 async function checkAdd(user,password)
 {
     try
@@ -13,7 +13,7 @@ async function checkAdd(user,password)
     let userExistsOrNot
 
     // check if user exists
-    usersArray = await mongoDbOperations.checkIfUserExists(user)
+    usersArray = await mongoDbOperations.checkIfUserExistsAndReturnThem(user)
     
     
     if(usersArray.length > 0)
@@ -32,14 +32,21 @@ async function checkAdd(user,password)
         //  if user doesnt exist
             let temp=genPassword(password)
             
-            await mongoDbOperations.addUser(user,temp.salt,temp.hash)
+            let currentUser=await mongoDbOperations.addUser(user,temp.salt,temp.hash)
 
-            console.log('done')
+            console.log(currentUser)
+
+            // return the userObject for making jwt
+
     }
     else
     {
         // the user already exist so login
-        console.log('Use the login function')
+        console.log('Use the login function',usersArray[0])
+        
+        // return the userObject
+        return usersArray[0]
+        
     }
    
     }
@@ -49,4 +56,18 @@ async function checkAdd(user,password)
     }
 }
 
-checkAdd('ajaynair','password')
+
+
+async function issueJWTAndShow(name,password)
+{
+    let userObject=await checkAdd(name,password)
+    let JWTtoken=await issueJwt(userObject)
+
+    console.log(JWTtoken)
+    return JWTtoken
+}
+
+
+
+
+issueJWTAndShow('ajaynew','hello')

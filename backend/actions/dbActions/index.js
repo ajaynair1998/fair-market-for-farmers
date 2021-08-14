@@ -21,6 +21,8 @@ class MongoDbClass{
 
     async addUser(name,salt,hash)
     {
+        try
+        {
         await this.connectionSuccessfull
 
          // add a document
@@ -33,8 +35,18 @@ class MongoDbClass{
             }
         )
 
-        await tempUser.save()
+        let user=await tempUser.save()
+
         console.log('Successfully saved User')
+
+        return user
+
+        }
+        catch(err)
+        {
+            console.log(err)
+            return false
+        }
     }
 
     async addProduct(name,stock,price,image,location)
@@ -72,42 +84,44 @@ class MongoDbClass{
     async showAllProducts()
     {
         try
-        {
-        await this.connectionSuccessfull
-
-         //   query the db
-        let products=await productModel.find({}).exec()
-      
-  
-        return products
-        }
-        catch(err)
-        {
-            if(err)
             {
-                console.log(err)
+            await this.connectionSuccessfull
+
+            //   query the db
+            let products=await productModel.find({}).exec()
+        
+    
+            return products
             }
-        }
+            catch(err)
+            {
+                if(err)
+                {
+                    console.log(err)
+                }
+            }
 
     }
 
     async showAllUsers()
     {   
-    try
-    {
-        await this.connectionSuccessfull
-        //   query the db
-        let users=await userModel.find({}).exec()
-        return users
-    }
-    catch(err)
-    {
 
-        return 'error occured recieving users'
-    }
+        try
+        {
+            await this.connectionSuccessfull
+            //   query the db
+            let users=await userModel.find({}).exec()
+            return users
+        }
+        catch(err)
+        {
+
+            return 'error occured recieving users'
+        }
+
     }
 
-    async checkIfUserExists(name)
+    async checkIfUserExistsAndReturnThem(name)
     {
         try
         {
@@ -122,6 +136,27 @@ class MongoDbClass{
         catch(err)
         {
             console.log(err)
+        }
+    }
+
+    async checkIfUserExists(name)
+    {
+        try
+        {
+
+            await this.connectionSuccessfull
+
+            let query=await userModel.find({userName:name})
+            
+            // returns true if user exists
+            query.length > 0 ? true : false
+            
+        }
+        catch(err)
+        {
+
+            console.log(err)
+
         }
     }
 
