@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 
-class Login extends Component{
+class Register extends Component{
     constructor()
     {
         super()
@@ -12,7 +12,7 @@ class Login extends Component{
         return(
             <div className='loginPageMain'>
                 <div className='mainContainer'>
-                    <form action='http://192.168.1.5:5000/loginPost' method='POST'>
+                    <form action='http://192.168.1.5:5000/registerPost' method='POST'>
                         <input name='username' id='username' ></input>
                         <input name='password' id='password'></input>
                         <button>Send my greetings</button>
@@ -23,4 +23,4 @@ class Login extends Component{
     }
 }
 
-export default Login
+export default Register
