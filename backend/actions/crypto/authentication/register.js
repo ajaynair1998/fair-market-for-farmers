@@ -19,7 +19,7 @@ async function register(userName,password)
 
         if(userExists)
         {
-            finalResponse=[false,'User Exists Already']
+            finalResponse={success:false,content:'User Exists Already'}
             return finalResponse
         }
         else
@@ -31,7 +31,7 @@ async function register(userName,password)
             
             let token=await issueJwt(userObject)
             
-            finalResponse=[true,token]
+            finalResponse={success:true,token:token}
 
             return finalResponse
 

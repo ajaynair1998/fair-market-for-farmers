@@ -27,7 +27,6 @@ function genPassword(password)
 async function issueJwt(userObject)
 {
     let user =await userObject
-    console.log(user,'from issue jwt')
     const _id=user._id
 
     const expiresIn='1d'
