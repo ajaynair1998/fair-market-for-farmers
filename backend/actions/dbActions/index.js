@@ -37,8 +37,6 @@ class MongoDbClass{
 
         let user=await tempUser.save()
 
-        console.log('Successfully saved User')
-
         return user
 
         }
@@ -128,8 +126,8 @@ class MongoDbClass{
             await this.connectionSuccessfull
 
             let query=await userModel.find({userName:name})
-
-            return query
+            
+            return query[0]
 
 
         }
@@ -148,9 +146,11 @@ class MongoDbClass{
 
             let query=await userModel.find({userName:name})
             
+            // console.log(query)
+
             // returns true if user exists
-            query.length > 0 ? true : false
-            
+            return query.length > 0 ? true : false
+
         }
         catch(err)
         {

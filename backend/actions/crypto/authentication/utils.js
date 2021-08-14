@@ -9,7 +9,7 @@ const PRIV_KEY=fs.readFileSync(pathToKey,'utf-8')
 
 function validPassword(password,hash,salt)
 {
-    let hashverify=crypto.pbkdf2Sync(password,salt,10000,64,'sha512').toString('hex')
+    let hashVerify=crypto.pbkdf2Sync(password,salt,10000,64,'sha512').toString('hex')
     return hash === hashVerify
 }
 
@@ -27,7 +27,7 @@ function genPassword(password)
 async function issueJwt(userObject)
 {
     let user =await userObject
-
+    console.log(user,'from issue jwt')
     const _id=user._id
 
     const expiresIn='1d'
