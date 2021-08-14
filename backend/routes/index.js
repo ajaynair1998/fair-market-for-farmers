@@ -20,13 +20,19 @@ router.get('/products', async (req, res) => {
 })
 
 // api to log in  -> in work
-router.post('/loginPost',(req,res) =>
+router.post('/registerPost',async (req,res,next) =>
 {
-
+  try{
     res.json({reply:'acknowledged',
     name:req.body.username,
     password:req.body.password})
 
+    const salt
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
 })
 
 

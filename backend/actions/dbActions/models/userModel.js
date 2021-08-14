@@ -3,14 +3,11 @@ const mongoose=require('mongoose')
 // define new Schema
 let userSchema=
 
-
-
-  
-  
-   new mongoose.Schema(
+new mongoose.Schema(
     {
       userName:String,
-      password:String
+      salt:String,
+      hash:String
   
     }
   )

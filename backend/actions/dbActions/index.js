@@ -19,7 +19,7 @@ class MongoDbClass{
         )
     }
 
-    async addUser(name,password)
+    async addUser(name,salt,hash)
     {
         await this.connectionSuccessfull
 
@@ -27,7 +27,8 @@ class MongoDbClass{
         let tempUser=new userModel(
             {
             userName:name,
-            password:password
+            salt:salt,
+            hash:hash
         
             }
         )
@@ -104,6 +105,24 @@ class MongoDbClass{
 
         return 'error occured recieving users'
     }
+    }
+
+    async checkIfUserExists(name)
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            let query=await userModel.find({userName:name})
+
+            return query
+
+
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
     }
 
 }
