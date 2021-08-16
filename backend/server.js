@@ -1,7 +1,6 @@
 const express = require('express')
 const cors=require('cors')
 const app = express()
-const passport = require('passport')
 const port = 5000
 
 
