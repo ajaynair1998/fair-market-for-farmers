@@ -29,7 +29,7 @@ async function issueJwt(userObject)
     let user =await userObject
     const _id=user._id
 
-    const expiresIn='1d'
+    const expiresIn=1
     
     const payload={
         sub:_id,
@@ -39,7 +39,7 @@ async function issueJwt(userObject)
     const signedToken=jsonwebtoken.sign(payload,PRIV_KEY,{expiresIn:expiresIn,algorithm:'RS256'})
 
     return {
-        token: "Bearer " + signedToken,
+        token: signedToken,
         expires:expiresIn
     }
 }

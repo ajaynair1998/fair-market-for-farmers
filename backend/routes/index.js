@@ -1,5 +1,6 @@
 let express=require('express')
 let router =express.Router()
+const passport=require('passport')
 
 // importing mongoDb class for operations on db on each route
 const MongoDbClass=require('../actions/dbActions/index')
@@ -9,7 +10,6 @@ const mongoDbOperations=new MongoDbClass()
 // authentication functions
 const register=require('../actions/crypto/authentication/register')
 const login=require('../actions/crypto/authentication/login')
-
 
 
 
@@ -63,6 +63,20 @@ router.post('/loginPost',async (req,res) =>
   catch(err)
   {
     console.log(err)
+  }
+})
+// passport.authenticate('jwt',{session:false}),
+// get the dashboard of the current user
+router.get('/dashboard',async (req,res) =>
+{
+  try
+  {
+    console.log(req.body)
+    res.json({success:true,msg:'you are authorised'})
+  }
+  catch(err)
+  {
+    res.json({success:false,msg:'you are not authorised'})
   }
 })
 

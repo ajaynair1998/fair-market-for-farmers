@@ -4,14 +4,21 @@ const app = express()
 const port = 5000
 
 
+
 // importing routes
 let routes=require('./routes/index')
 
 
+
 // middlewares
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors())
+app.use(cors({origin:'*'}))
+
+
+
+
 
 
 // Routes

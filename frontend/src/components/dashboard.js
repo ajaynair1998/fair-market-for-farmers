@@ -11,7 +11,7 @@ class Dashboard extends React.Component{
     }
 
     // On Mounting
-    componentDidMount(){
+    async componentDidMount(){
 
         // if there s a cookie then proceed to page else just go back to login
         if(Cookies.get('user'))
@@ -22,6 +22,13 @@ class Dashboard extends React.Component{
                 return {...prevState,userCookie:Cookies.get('user')}
             })
         
+        let userCookie=Cookies.get('user')
+
+        // debug
+        // console.log(userCookie)
+
+        let response=await getData(userCookie)
+        console.log(response)
         
 
         }
@@ -55,5 +62,26 @@ class Dashboard extends React.Component{
 
     }
 }
+
+async function getData(token)
+{
+    try
+    {
+
+    
+    
+
+    let response=await axios.get(`http://127.0.1.1:5000/dashboard`,{headers:{"Authorization":token}})
+    console.log(response)
+    
+
+    }
+    catch(err)
+    {
+        console.log(err)
+        return err
+    }
+}
+
 
 export default Dashboard

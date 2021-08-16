@@ -119,13 +119,13 @@ class MongoDbClass{
 
     }
 
-    async checkIfUserExistsAndReturnThem(name)
+    async checkIfUserExistsAndReturnThem(name,field='userName')
     {
         try
         {
             await this.connectionSuccessfull
 
-            let query=await userModel.find({userName:name})
+            let query=await userModel.find({[field]:name})
             
             return query[0]
 
@@ -137,14 +137,15 @@ class MongoDbClass{
         }
     }
 
-    async checkIfUserExists(name)
+    // by default checks if username exists
+    async checkIfUserExists(name,field='userName')
     {
         try
         {
 
             await this.connectionSuccessfull
 
-            let query=await userModel.find({userName:name})
+            let query=await userModel.find({[field]:name})
             
             // console.log(query)
 
@@ -157,6 +158,24 @@ class MongoDbClass{
 
             console.log(err)
 
+        }
+    }
+
+    // check for a user by object id
+    async checkByObjectIdAndReturn(id)
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            let query=await userModel.findById({'_id':id})
+            // console.log(query)
+            return query
+
+        }
+        catch(err)
+        {
+            console.log(err)
         }
     }
 

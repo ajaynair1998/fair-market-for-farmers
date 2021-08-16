@@ -122,8 +122,8 @@ function setCookieUser(token,username)
     let expires=new Date()
     expires.setTime(expires.getTime() + (expires.minutes*60*24))
 
-    Cookie.set('user',token,{path:'/',expires})
-    Cookie.set('userName',username,{path:'/',expires})
+    Cookie.set('user',token,{path:'/',expires:1,sameSite:'Lax'})
+    // Cookie.set('userName',username,{path:'/',expires:1,sameSite:'Lax'})
 }
 
 
