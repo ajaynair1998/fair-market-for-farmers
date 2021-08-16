@@ -1,0 +1,14 @@
+.signupCard {
+  margin-top: 3rem;
+}
+
+.signupLink {
+    text-align: center;
+}
+
+.signupLink a {
+    color: #6200ee;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 0.5em;
+}
