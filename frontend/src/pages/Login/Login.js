@@ -13,7 +13,7 @@ class Login extends Component {
         return (
             <div className="loginPage">
                 <div className="container">
-                    <AuthCard title="Login" btnText="LOGIN" className="loginCard" />
+                    <AuthCard title="Login" btnText="LOGIN" showPasswordReset={true} className="loginCard" />
                     <p className="signupLink">
                         Don't have an account yet ?
                         <Link to="/signup">

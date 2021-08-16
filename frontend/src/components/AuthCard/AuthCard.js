@@ -102,12 +102,14 @@ class AuthCard extends Component {
                                         }
                                     />
                                 </FormControl>
-                                <Link
-                                    to="/login"
-                                    className="authCard__resetPass"
-                                >
-                                    Forgot Password ?
-                                </Link>
+                                {this.props.showPasswordReset &&
+                                    <Link
+                                        to="/login"
+                                        className="authCard__resetPass"
+                                    >
+                                        Forgot Password ?
+                                    </Link>
+                                }
                             </div>
                             <div className="authCard__footer">
                                 <Button
