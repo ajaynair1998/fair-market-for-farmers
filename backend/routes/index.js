@@ -1,6 +1,7 @@
 let express=require('express')
 let router =express.Router()
 const passport=require('passport')
+const verifyAndRetrieveUser=require('../actions/crypto/authentication/protected')
 
 // importing mongoDb class for operations on db on each route
 const MongoDbClass=require('../actions/dbActions/index')
@@ -71,8 +72,11 @@ router.get('/dashboard',async (req,res) =>
 {
   try
   {
-    console.log(req.body)
-    res.json({success:true,msg:'you are authorised'})
+    let token=req.header("Authorization")
+
+    let userName=await verifyAndRetrieveUser(token)
+
+    res.json({success:true,msg:'you are authorised',user:"Ajay"})
   }
   catch(err)
   {

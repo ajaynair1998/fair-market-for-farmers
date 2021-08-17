@@ -70,7 +70,7 @@ class Login extends Component{
         return(
             <div className='loginPageMain'>
                 <div className='mainContainer'>
-                    <form action='http://192.168.1.5:5000/loginPost' method='POST'>
+                    <form action='http://localhost:5000/loginPost' method='POST'>
                         <input name='username' id='username' onChange={this.credentialsOnChange}></input>
                         <input name='password' id='password' onChange={this.credentialsOnChange}></input>
                         <button onClick={this.handleClickLogin}>Login</button>
@@ -86,7 +86,7 @@ async function authentication(username,password)
 {
     try
     {
-        let response = await axios.post(`http://192.168.1.5:5000/loginPost`,{username:username,password:password},{'content-type':'application/json'})
+        let response = await axios.post(`http://localhost:5000/loginPost`,{username:username,password:password},{'content-type':'application/json'})
         return response
     }
     catch(err)

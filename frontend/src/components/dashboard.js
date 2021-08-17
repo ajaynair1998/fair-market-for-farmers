@@ -71,7 +71,7 @@ async function getData(token)
     
     
 
-    let response=await axios.get(`http://127.0.1.1:5000/dashboard`,{headers:{"Authorization":token}})
+    let response=await axios.get(`http://localhost:5000/dashboard`,{headers:{"Authorization":token}})
     console.log(response)
     
 
