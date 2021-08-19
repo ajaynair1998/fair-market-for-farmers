@@ -1,0 +1,29 @@
+.authCard__title {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.authCard__inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.authCard__input {
+    margin-top: 1rem;
+}
+
+.authCard__resetPass {
+    align-self: end;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.authCard__footer {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.authCard__btn {
+}
+
