@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 require("dotenv").config(); 
 
-async function addUser(userModel,name,password)
+async function addUser(userModel,name,salt,hash)
 {
 
 // Connect to Db
@@ -19,7 +19,8 @@ mongoose.connect(
   let tempUser=new userModel(
     {
       userName:name,
-      password:password
+      salt:salt,
+      hash:hash
   
     }
   )
