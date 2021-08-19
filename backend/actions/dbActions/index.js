@@ -224,6 +224,19 @@ class MongoDbClass{
         }
     }
 
+    // add a product by a user
+    async addProductByUser(userName,productObject)
+    {
+        try
+        {
+            continue
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
 
 
 
