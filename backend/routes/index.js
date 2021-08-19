@@ -30,7 +30,7 @@ router.get('/products', async (req, res) => {
 })
 
 // api to register a user  -> in work
-router.post('/registerPost',async (req,res) =>
+router.post('/register',async (req,res) =>
 {
   try
   {
@@ -49,10 +49,11 @@ router.post('/registerPost',async (req,res) =>
 
 
 // api to log in
-router.post('/loginPost',async (req,res) =>
+router.post('/login',async (req,res) =>
 {
   try
   {
+    
     let response=await login(req.body.username,req.body.password)
 
    
@@ -66,8 +67,60 @@ router.post('/loginPost',async (req,res) =>
     console.log(err)
   }
 })
-// passport.authenticate('jwt',{session:false}),
+
+// Get further details after registering
+// (ie getting the user authentication token)
+router.get('/profile',async (req,res) =>
+{
+  try
+  {
+    let token=req.header("Authorization")
+
+    let userName=await verifyAndRetrieveUser(token)
+
+    // if not authorised
+    if(!userName)res.status(404).json({success:false,msg:"you are unauthorised"})
+
+    // if authorised
+    let userDetails=await mongoDbOperations.getProfileDetailsOfTheUser(userName)
+    res.status(200).json({success:true,details:userDetails})
+
+    
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
+}
+)
+
+// post after editing profile
+router.post('/profile',async (req,res) =>
+{
+  try
+  {
+    let token=req.header("Authorization")
+
+    let userName=await verifyAndRetrieveUser(token)
+    // if not authorised
+    if(!userName)res.status(404).json({success:false,msg:"you are unauthorised"})
+
+    // if authorised
+    let successfullyEdited=await mongoDbOperations.editProfileDetailsOfTheUser(userName,req.body)
+
+    if(successfullyEdited)res.status(200).json({success:true,msg:"successfully Edited"})
+    res.status(400).json({success:false,msg:"Something went wrong"})
+
+  }
+  catch(err)
+  {
+
+  }
+})
+
+
 // get the dashboard of the current user
+// more to do after creating products done
 router.get('/dashboard',async (req,res) =>
 {
   try
@@ -76,12 +129,18 @@ router.get('/dashboard',async (req,res) =>
 
     let userName=await verifyAndRetrieveUser(token)
 
-    res.json({success:true,msg:'you are authorised',user:"Ajay"})
+    // if not authorised
+    if(!userName)res.status(404).json({success:false,msg:"you are unauthorised"})
+
+    // if authorised
+    res.status(200).json({success:true,msg:'you are authorised',user:userName})
   }
   catch(err)
   {
     res.json({success:false,msg:'you are not authorised'})
   }
 })
+
+
 
 module.exports=router

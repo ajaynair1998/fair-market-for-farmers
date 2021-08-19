@@ -179,5 +179,57 @@ class MongoDbClass{
         }
     }
 
+    // get all the details of the user
+    async getProfileDetailsOfTheUser(id,field="userName")
+    {
+        try{
+        await this.connectionSuccessfull
+
+        let query=await userModel.find({[field]:id},{salt:0,hash:0,_id:0,__v:0})
+
+        return query[0]
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
+    // edit the profile of the user
+    async editProfileDetailsOfTheUser(id,newDetails)
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            let filter={userName:id}
+
+
+            // TO MAKE SURE NO PRIMARY FIELD ARE PASSED INTO NEW DETAILS
+            // FILTER THEM OUT
+
+            let query =await userModel.findOneAndUpdate(filter,newDetails,
+                {
+                    new:true
+                })
+            
+            // return true if operation successfull
+            if(!query)return false
+            return true
+            
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
+
+
+
+            
+
+
+
 }
 module.exports= MongoDbClass
