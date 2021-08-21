@@ -45,39 +45,7 @@ class MongoDbClass{
             console.log(err)
             return false
         }
-    }
-
-    async addProduct(name,stock,price,image,location)
-    {
-
-        await this.connectionSuccessfull
-
-        // add a document
-        let tempProduct=new productModel(
-            {
-            productName:name,
-            stock:stock,
-            price:price,
-            image:image,
-            location:location,
-            
-        
-            }
-        )
-
-         await tempProduct.save((err,userDoc) =>
-        {
-            if(err)
-            {
-                console.log(err)
-            }
-            else
-            {
-                console.log('successfully saved product')
-            }
-        })
-    }
-
+    } 
 
     async showAllProducts()
     {
@@ -230,7 +198,16 @@ class MongoDbClass{
         try
         {
             // add
-            continue
+            await this.connectionSuccessfull
+            
+            // Make a temporary products by the product model
+            let tempProduct=new productModel( productObject )
+
+            // now save this product in the products collection
+            await tempProduct.save()
+
+            return true
+
         }
         catch(err)
         {

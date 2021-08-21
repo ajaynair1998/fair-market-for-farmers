@@ -141,6 +141,31 @@ router.get('/dashboard',async (req,res) =>
   }
 })
 
+router.post('/product',async (req,res) => 
+{
+  try
+  {
+    let token=req.header("Authorization")
+
+    let userName=await verifyAndRetrieveUser(token)
+
+    // if not authorized then return unauthorised status 404
+    if(!userName || !req.body.product)res.status(404).json({success:false,msg:"You are not Authorized"})
+
+    // if authorized
+    // then add the product to products database and reutnr status ok
+    req.body.product.userReference = userName ;
+    let productAddedSuccessfully=await mongoDbOperations.addProductByUser(userName,req.body.product)
+    if(productAddedSuccessfully)res.status(200).json({success:true,msg:"Product added successfully"})
+    else res.status(500).json({success:false,msg:"could not add the product"})
+
+  }
+  catch(err)
+  {
+
+  }
+})
+
 
 
 module.exports=router
