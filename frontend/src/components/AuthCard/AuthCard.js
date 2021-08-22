@@ -107,9 +107,13 @@ class AuthCard extends Component {
                   size="large"
                   fullWidth={true}
                   onClick={async () => {
-                    const isAuth = await authFn();
-                    console.log('auth complete: ', isAuth);
-                    if (isAuth) onAuth();
+                    try {
+                      const isAuth = await authFn();
+                      console.log('auth complete: ', isAuth);
+                      onAuth(isAuth);
+                    } catch (e) {
+                      console.error(e);
+                    }
                   }}
                 >
                   {btnText}
