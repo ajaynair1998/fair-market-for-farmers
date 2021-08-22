@@ -166,6 +166,38 @@ router.post('/product',async (req,res) =>
   }
 })
 
+// buy a product ie; a transaction
+// we need the buyer name and the stock bought
+router.post('/buy',async (req,res)=>
+{
+  try
+  {
+    // extract token from request
+      let token =req.header('Authorization')
+
+      let userName=await verifyAndRetrieveUser(token)
+
+      // if not authorized
+      if(!userName || !req.body.product)res.status(404).json({success:false,msg:"You are not Authorized"})
+
+      // if request not correct then return bad request
+      if(!req.body.product || !req.body.stock)res.status(400).json({success:false,msg:"Bad Request"})
+
+      // if authorised and there is a valid request
+      let transaction=await mongoDbOperations.makeTransactionByBuyer(userName,req.body.stock,req.body.product)
+
+      // if the transaction was successfull
+      if(transaction)res.status(200).json({success:true,msg:"Transaction Done Successfully"})
+
+      // if the transaction failed
+      else res.status(500).json({success:false,msg:"Failed Transaction"})
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
+})
+
 
 
 module.exports=router

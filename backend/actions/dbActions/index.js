@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
 const productModel=require('./models/productModel')
 const userModel=require('./models/userModel')
+const transactionModel=require('./models/transactionModel')
 
 require("dotenv").config(); 
 
@@ -86,6 +87,23 @@ class MongoDbClass{
         }
 
     }
+
+    async showAllTransactions()
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            // query the db
+            let transactions=await transactionModel.find({}).exec()
+            return transactions
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
 
     async checkIfUserExistsAndReturnThem(name,field='userName')
     {
@@ -212,6 +230,31 @@ class MongoDbClass{
         catch(err)
         {
             console.log(err)
+        }
+    }
+
+    // make A transaction by a User
+    // --> buying a specific amount of stock by a buyer from a farmer
+    async makeTransactionByBuyer(buyer,stockBought,productObject)
+    {
+        try
+        {
+        await this.connectionSuccessfull
+
+        // then add the current transaction into the transactions collection
+        let tempTransaction=new transactionModel({...productObject,buyer:buyer,stockBought:stockBought})
+
+        // now save tis transaction
+        await tempTransaction.save()
+
+        return true
+        }
+
+        catch(err)
+        {
+
+            console.log(err)
+            
         }
     }
 
