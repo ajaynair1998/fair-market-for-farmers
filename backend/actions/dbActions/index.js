@@ -166,12 +166,12 @@ class MongoDbClass{
     }
 
     // get all the details of the user
-    async getProfileDetailsOfTheUser(id,field="userName")
+    async getProfileDetailsOfTheUser(key,field="userName")
     {
         try{
         await this.connectionSuccessfull
 
-        let query=await userModel.find({[field]:id},{salt:0,hash:0,_id:0,__v:0})
+        let query=await userModel.find({[field]:key},{salt:0,hash:0,_id:0,__v:0})
 
         return query[0]
         }
@@ -233,6 +233,25 @@ class MongoDbClass{
         }
     }
 
+    // get the details of the product the buyer wishes to see
+    async retrieveProductDetails(key,field='_id')
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            let query=await productModel.find({[field]:key})
+
+            return query[0]
+
+        }
+
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
     // make A transaction by a User
     // --> buying a specific amount of stock by a buyer from a farmer
     async makeTransactionByBuyer(buyer,stockBought,productObject)
@@ -257,6 +276,8 @@ class MongoDbClass{
             
         }
     }
+
+
 
 
 

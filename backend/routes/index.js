@@ -17,14 +17,14 @@ const login=require('../actions/crypto/authentication/login')
 
 
 // api to get all users
-router.get('/users', async (req, res) => {
+router.get('/usersDebug', async (req, res) => {
   let users=await mongoDbOperations.showAllUsers()
   res.send({users:users})
 })
 
 
 // api to get all products
-router.get('/products', async (req, res) => {
+router.get('/productsDebug', async (req, res) => {
   let products=await mongoDbOperations.showAllProducts()
   res.send({products:products})
 })
@@ -140,6 +140,65 @@ router.get('/dashboard',async (req,res) =>
     res.json({success:false,msg:'you are not authorised'})
   }
 })
+
+// Get the details of a product
+router.post('/productDetails',async(req,res)=>
+{
+  try
+  {
+    // authorisation
+    let token=req.header("Authorization")
+    let userName=await verifyAndRetrieveUser(token)
+
+    if(!userName)
+    {
+      res.status(401).json({success:false,msg:"You are unauthorised"})
+    }
+    else
+    {
+      if(!req.body.productId)
+      {
+        res.status(400).json({success:false,msg:"No product Id Found"})
+      }
+      else
+      {
+        let productDetails=await mongoDbOperations.retrieveProductDetails(req.body.productId)
+
+        // if the product is found
+        if(productDetails)
+        {
+          res.status(200).json({success:true,product:productDetails})
+        }
+        // if the product by the given id is not found
+        else
+        {
+          res.status(500).json({success:false,msg:"No product found"})
+        }
+      }
+    }
+    
+
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.post('/product',async (req,res) => 
 {
