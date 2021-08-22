@@ -1,29 +1,29 @@
 .authCard__title {
-    text-transform: uppercase;
-    font-weight: bold;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .authCard__inputs {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .authCard__input {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .authCard__resetPass {
-    align-self: end;
-    margin-top: 0.5rem;
-    font-weight: bold;
-    text-decoration: none;
+  align-self: end;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .authCard__footer {
-    text-align: center;
-    margin-top: 3rem;
+  text-align: center;
+  margin-top: 3rem;
+  width: 100%;
 }
 
 .authCard__btn {
 }
-
