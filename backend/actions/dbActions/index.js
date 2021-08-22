@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
 const productModel=require('./models/productModel')
 const userModel=require('./models/userModel')
+const transactionModel=require('./models/transactionModel')
 
 require("dotenv").config(); 
 
@@ -45,39 +46,7 @@ class MongoDbClass{
             console.log(err)
             return false
         }
-    }
-
-    async addProduct(name,stock,price,image,location)
-    {
-
-        await this.connectionSuccessfull
-
-        // add a document
-        let tempProduct=new productModel(
-            {
-            productName:name,
-            stock:stock,
-            price:price,
-            image:image,
-            location:location,
-            
-        
-            }
-        )
-
-         await tempProduct.save((err,userDoc) =>
-        {
-            if(err)
-            {
-                console.log(err)
-            }
-            else
-            {
-                console.log('successfully saved product')
-            }
-        })
-    }
-
+    } 
 
     async showAllProducts()
     {
@@ -118,6 +87,23 @@ class MongoDbClass{
         }
 
     }
+
+    async showAllTransactions()
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            // query the db
+            let transactions=await transactionModel.find({}).exec()
+            return transactions
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
 
     async checkIfUserExistsAndReturnThem(name,field='userName')
     {
@@ -180,12 +166,12 @@ class MongoDbClass{
     }
 
     // get all the details of the user
-    async getProfileDetailsOfTheUser(id,field="userName")
+    async getProfileDetailsOfTheUser(key,field="userName")
     {
         try{
         await this.connectionSuccessfull
 
-        let query=await userModel.find({[field]:id},{salt:0,hash:0,_id:0,__v:0})
+        let query=await userModel.find({[field]:key},{salt:0,hash:0,_id:0,__v:0})
 
         return query[0]
         }
@@ -229,13 +215,69 @@ class MongoDbClass{
     {
         try
         {
-            continue
+            // add
+            await this.connectionSuccessfull
+            
+            // Make a temporary products by the product model
+            let tempProduct=new productModel( productObject )
+
+            // now save this product in the products collection
+            await tempProduct.save()
+
+            return true
+
         }
         catch(err)
         {
             console.log(err)
         }
     }
+
+    // get the details of the product the buyer wishes to see
+    async retrieveProductDetails(key,field='_id')
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            let query=await productModel.find({[field]:key})
+
+            return query[0]
+
+        }
+
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
+    // make A transaction by a User
+    // --> buying a specific amount of stock by a buyer from a farmer
+    async makeTransactionByBuyer(buyer,stockBought,productObject)
+    {
+        try
+        {
+        await this.connectionSuccessfull
+
+        // then add the current transaction into the transactions collection
+        let tempTransaction=new transactionModel({...productObject,buyer:buyer,stockBought:stockBought})
+
+        // now save tis transaction
+        await tempTransaction.save()
+
+        return true
+        }
+
+        catch(err)
+        {
+
+            console.log(err)
+            
+        }
+    }
+
+
 
 
 
