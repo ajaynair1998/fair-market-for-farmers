@@ -188,20 +188,6 @@ router.post('/productDetails', async (req, res) =>
 
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.post('/product', async (req, res) => 
 {
   try
@@ -239,13 +225,32 @@ router.post('/buy', async (req, res) =>
     let userName = await verifyAndRetrieveUser(token)
 
     // if not authorized
-    if (!userName || !req.body.product) res.status(404).json({ success: false, msg: "You are not Authorized" })
+    if (!userName) res.status(404).json({ success: false, msg: "You are not Authorized" })
 
     // if request not correct then return bad request
     if (!req.body.product || !req.body.stock) res.status(400).json({ success: false, msg: "Bad Request" })
 
+    // Extract product id from prodcuct object
+    let productId = req.body.product._id
+    // Firstly edit the stock by decreasing the value bought by the buyer from the stock available
+    let reduceAvailableStock = await mongoDbOperations.reduceStockBeforeTransaction(productId, req.body.stock)
+    // if we cannot reduce the stock then abort
+    let productObject
+    if (reduceAvailableStock)
+    {
+      // change the _id field to product_id since we are going to be adding it to transactions
+      productObject = req.body.product
+      delete productObject._id
+      productObject.product_id = productId
+    }
+    else 
+    {
+      res.status(500).json({ success: false, msg: "Failed Transaction" })
+    }
+
+
     // if authorised and there is a valid request
-    let transaction = await mongoDbOperations.makeTransactionByBuyer(userName, req.body.stock, req.body.product)
+    let transaction = await mongoDbOperations.makeTransactionByBuyer(userName, req.body.stock, productObject)
 
     // if the transaction was successfull
     if (transaction) res.status(200).json({ success: true, msg: "Transaction Done Successfully" })

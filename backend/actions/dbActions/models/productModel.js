@@ -9,7 +9,7 @@ let productSchema =
       productName: String,
       smallDescription: String,
       detailedDescription: String,
-      stock: String,
+      stock: Number,
       price: Number,
       image: String,
       location: String,

@@ -198,7 +198,8 @@ class MongoDbClass
 
             let query = await userModel.findOneAndUpdate(filter, newDetails,
                 {
-                    new: true
+                    new: true,
+                    useFindAndModify: false
                 })
 
             // return true if operation successfull
@@ -242,7 +243,7 @@ class MongoDbClass
         {
             await this.connectionSuccessfull
 
-            let query = await productModel.find({ [field]: key }, { _id: 0 })
+            let query = await productModel.find({ [field]: key }, { __v: 0 })
 
             return query[0]
 
@@ -279,14 +280,26 @@ class MongoDbClass
         }
     }
 
-    async reduceStockAfterTransaction(productId, stock)
+    async reduceStockBeforeTransaction(productId, stockBought)
     {
         try
         {
             await this.connectionSuccessfull
 
+
             // find and modify the stock of the product
             // by reducing the stock bought by the buyer
+            let query = await productModel.findOneAndUpdate(productId, { $inc: { "stock": -stockBought } }, {
+                new: true,
+                useFindAndModify: false
+            })
+            // DEBUG
+            // console.log(query)
+            if (query) return true
+            else return false
+
+
+
 
         }
         catch (err)
