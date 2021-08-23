@@ -83,9 +83,12 @@ router.get('/profile', async (req, res) =>
     // if not authorised
     if (!userName) res.status(404).json({ success: false, msg: "you are unauthorised" })
 
-    // if authorised
-    let userDetails = await mongoDbOperations.getProfileDetailsOfTheUser(userName)
-    res.status(200).json({ success: true, details: userDetails })
+    else
+    {
+      // if authorised
+      let userDetails = await mongoDbOperations.getProfileDetailsOfTheUser(userName)
+      res.status(200).json({ success: true, details: userDetails })
+    }
 
 
   }
@@ -107,11 +110,14 @@ router.post('/profile', async (req, res) =>
     // if not authorised
     if (!userName) res.status(404).json({ success: false, msg: "you are unauthorised" })
 
-    // if authorised
-    let successfullyEdited = await mongoDbOperations.editProfileDetailsOfTheUser(userName, req.body)
+    else
+    {
+      // if authorised
+      let successfullyEdited = await mongoDbOperations.editProfileDetailsOfTheUser(userName, req.body)
 
-    if (successfullyEdited) res.status(200).json({ success: true, msg: "successfully Edited" })
-    res.status(400).json({ success: false, msg: "Something went wrong" })
+      if (successfullyEdited) res.status(200).json({ success: true, msg: "successfully Edited" })
+      res.status(400).json({ success: false, msg: "Something went wrong" })
+    }
 
   }
   catch (err)
@@ -133,9 +139,12 @@ router.get('/dashboard', async (req, res) =>
 
     // if not authorised
     if (!userName) res.status(404).json({ success: false, msg: "you are unauthorised" })
-
-    // if authorised
-    res.status(200).json({ success: true, msg: 'you are authorised', user: userName })
+    else
+    {
+      // if authorised
+      let productsToDisplay = await mongoDbOperations.retrieveAllProductExceptUsersProduct(userName)
+      res.status(200).json({ success: true, msg: 'you are authorised', user: userName, dashBoardProducts: productsToDisplay })
+    }
   }
   catch (err)
   {
@@ -199,12 +208,15 @@ router.post('/product', async (req, res) =>
     // if not authorized then return unauthorised status 404
     if (!userName || !req.body.product) res.status(404).json({ success: false, msg: "You are not Authorized" })
 
-    // if authorized
-    // then add the product to products database and reutnr status ok
-    req.body.product.userReference = userName;
-    let productAddedSuccessfully = await mongoDbOperations.addProductByUser(userName, req.body.product)
-    if (productAddedSuccessfully) res.status(200).json({ success: true, msg: "Product added successfully" })
-    else res.status(500).json({ success: false, msg: "could not add the product" })
+    else
+    {
+      // if authorized
+      // then add the product to products database and reutnr status ok
+      req.body.product.userReference = userName;
+      let productAddedSuccessfully = await mongoDbOperations.addProductByUser(userName, req.body.product)
+      if (productAddedSuccessfully) res.status(200).json({ success: true, msg: "Product added successfully" })
+      else res.status(500).json({ success: false, msg: "could not add the product" })
+    }
 
   }
   catch (err)
@@ -225,38 +237,44 @@ router.post('/buy', async (req, res) =>
     let userName = await verifyAndRetrieveUser(token)
 
     // if not authorized
-    if (!userName) res.status(404).json({ success: false, msg: "You are not Authorized" })
-
-    // if request not correct then return bad request
-    if (!req.body.product || !req.body.stock) res.status(400).json({ success: false, msg: "Bad Request" })
-
-    // Extract product id from prodcuct object
-    let productId = req.body.product._id
-    // Firstly edit the stock by decreasing the value bought by the buyer from the stock available
-    let reduceAvailableStock = await mongoDbOperations.reduceStockBeforeTransaction(productId, req.body.stock)
-    // if we cannot reduce the stock then abort
-    let productObject
-    if (reduceAvailableStock)
+    if (!userName)
     {
-      // change the _id field to product_id since we are going to be adding it to transactions
-      productObject = req.body.product
-      delete productObject._id
-      productObject.product_id = productId
+      res.status(404).json({ success: false, msg: "You are not Authorized" })
     }
-    else 
+    else
     {
-      res.status(500).json({ success: false, msg: "Failed Transaction" })
+
+      // if request not correct then return bad request
+      if (!req.body.product || !req.body.stock) res.status(400).json({ success: false, msg: "Bad Request" })
+
+      // Extract product id from prodcuct object
+      let productId = req.body.product._id
+      // Firstly edit the stock by decreasing the value bought by the buyer from the stock available
+      let reduceAvailableStock = await mongoDbOperations.reduceStockBeforeTransaction(productId, req.body.stock)
+      // if we cannot reduce the stock then abort
+      let productObject
+      if (reduceAvailableStock)
+      {
+        // change the _id field to product_id since we are going to be adding it to transactions
+        productObject = req.body.product
+        delete productObject._id
+        productObject.product_id = productId
+      }
+      else 
+      {
+        res.status(500).json({ success: false, msg: "Failed Transaction" })
+      }
+
+
+      // if authorised and there is a valid request
+      let transaction = await mongoDbOperations.makeTransactionByBuyer(userName, req.body.stock, productObject)
+
+      // if the transaction was successfull
+      if (transaction) res.status(200).json({ success: true, msg: "Transaction Done Successfully" })
+
+      // if the transaction failed
+      else res.status(500).json({ success: false, msg: "Failed Transaction" })
     }
-
-
-    // if authorised and there is a valid request
-    let transaction = await mongoDbOperations.makeTransactionByBuyer(userName, req.body.stock, productObject)
-
-    // if the transaction was successfull
-    if (transaction) res.status(200).json({ success: true, msg: "Transaction Done Successfully" })
-
-    // if the transaction failed
-    else res.status(500).json({ success: false, msg: "Failed Transaction" })
   }
   catch (err)
   {
@@ -265,5 +283,56 @@ router.post('/buy', async (req, res) =>
 })
 
 
+// user's products
+router.get('/myproducts', async (req, res) =>
+{
+  try
+  {
+    // extract token from request
+    let token = req.header('Authorization')
+
+    let userName = await verifyAndRetrieveUser(token)
+
+    // if not authorized
+    if (!userName) res.status(404).json({ success: false, msg: "You are not Authorized" })
+
+    else
+    {
+      let productsTheUserIsSelling = await mongoDbOperations.retrieveAlltheProductByUser(userName)
+      res.status(200).json({ success: true, products: productsTheUserIsSelling })
+
+    }
+
+  }
+  catch (err)
+  {
+    console.log(err)
+  }
+})
+
+// user's transactions
+router.get('/transactions', async (req, res) =>
+{
+  try
+  {
+    // extract token from request
+    let token = req.header('Authorization')
+
+    let userName = await verifyAndRetrieveUser(token)
+
+    // if not authorized
+    if (!userName) res.status(404).json({ success: false, msg: "You are not Authorized" })
+
+    else
+    {
+      let transactionsOfTheUser = await mongoDbOperations.retriveUsersTransactions(userName)
+      res.status(200).json({ success: true, transactions: transactionsOfTheUser })
+    }
+  }
+  catch (err)
+  {
+    console.log(err)
+  }
+})
 
 module.exports = router

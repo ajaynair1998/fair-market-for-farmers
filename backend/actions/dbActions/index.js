@@ -308,10 +308,69 @@ class MongoDbClass
         }
     }
 
+    async retrieveAllProductExceptUsersProduct(userName)
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            // query the db to find all products
+            // where userRef != current user's name
+
+            let query = await productModel.find({ userReference: { $ne: userName } }, { __v: 0 })
+
+            return query
 
 
 
+        }
+        catch (err)
+        {
+            console.log(err)
+        }
+    }
 
+    // retrieve the products added by user
+    async retrieveAlltheProductByUser(userName)
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            // Now get the products having the userReferance as the name
+            // of the current user
+
+            let query = await productModel.find({ userReference: { $eq: userName } }, { __v: 0 })
+
+            return query
+        }
+        catch (err)
+        {
+            console.log(err)
+        }
+    }
+
+
+    // retrieve the user's transaction
+    // buying or selling
+    async retriveUsersTransactions(userName)
+    {
+        try
+        {
+            await this.connectionSuccessfull
+
+            // now find all the entries from
+            // transactions where buyer
+            // or userReference is the user's name
+            let query = await transactionModel.find({ $or: [{ userReference: { $eq: userName }}, {buyer: { $eq: userName } }] })
+            return query
+
+        }
+        catch (err)
+        {
+            console.log(err)
+        }
+    }
 
 
 
