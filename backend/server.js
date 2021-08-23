@@ -1,12 +1,12 @@
 const express = require('express')
-const cors=require('cors')
+const cors = require('cors')
 const app = express()
 const port = 5000
 
 
 
 // importing routes
-let routes=require('./routes/index')
+let routes = require('./routes/index')
 
 
 
@@ -14,7 +14,7 @@ let routes=require('./routes/index')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors({origin:'*'}))
+app.use(cors({ origin: '*' }))
 
 
 
@@ -23,10 +23,11 @@ app.use(cors({origin:'*'}))
 
 // Routes
 
-app.use('/',routes)
+app.use('/', routes)
 
 
-app.listen(port, () => {
+app.listen(port, () =>
+{
   console.log(`Fair Market  app listening at http://localhost:${port}`)
 })
 
