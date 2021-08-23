@@ -362,7 +362,7 @@ class MongoDbClass
             // now find all the entries from
             // transactions where buyer
             // or userReference is the user's name
-            let query = await transactionModel.find({ $or: [{ userReference: { $eq: userName }}, {buyer: { $eq: userName } }] })
+            let query = await transactionModel.find({ $or: [{ userReference: { $eq: userName } }, { buyer: { $eq: userName } }] })
             return query
 
         }
