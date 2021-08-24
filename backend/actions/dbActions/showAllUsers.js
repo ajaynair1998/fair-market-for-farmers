@@ -1,32 +1,32 @@
-const mongoose=require('mongoose')
-require("dotenv").config(); 
+const mongoose = require('mongoose')
+require("dotenv").config();
 
 async function showAllUsers(userModel)
 {
-    try{
+    try
+    {
 
-    // Connect to Db
-    mongoose.connect(
-        process.env.MONGODB_URL,
-        {
-        useNewUrlParser:true,
-        useUnifiedTopology:true
-        }
-    )
+        // Connect to Db
+        mongoose.connect(
+            process.env.MONGODB_URL,
+            {
+                useNewUrlParser: true,
+                useUnifiedTopology: true
+            }
+        )
 
-  
-    //   query the db
-    let users=await userModel.find({}).exec()
-    return users
 
+        //   query the db
+        let users = await userModel.find({}).exec()
+        return users
+
+    }
+    catch (err)
+    {
+
+        return 'error occured'
+
+    }
 }
-catch(err)
-{
-   
-    return 'error occured'
-    
-}
-}
-  
-module.exports =  showAllUsers
-  
+
+module.exports = showAllUsers
