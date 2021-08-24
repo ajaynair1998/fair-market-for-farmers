@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import './Login.css';
 import AuthCard from '../../components/AuthCard/AuthCard';
 import { Link } from 'react-router-dom';
+
 class Login extends Component {
-  constructor() {
-    super();
+  /**
+   * why pass props to super ? I just found about this on
+   * https://overreacted.io/why-do-we-write-super-props/
+   */
+  constructor(props) {
+    super(props);
     this.state = {};
   }
 
   handleAuth() {
     window.location.assign('/products/add/');
-  }
-
-  authFn() {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
   }
 
   render() {
@@ -26,7 +25,7 @@ class Login extends Component {
           btnText="LOGIN"
           showPasswordReset={true}
           className="loginCard"
-          authFn={this.authFn}
+          authMode="signin"
           onAuth={this.handleAuth}
         />
         <p className="signupLink">

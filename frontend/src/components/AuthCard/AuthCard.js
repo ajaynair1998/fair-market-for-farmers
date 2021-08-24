@@ -14,10 +14,11 @@ import {
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import './AuthCard.css';
 import { Link } from 'react-router-dom';
+import { saveAuth, signin, signup } from '../../lib/auth';
 
 class AuthCard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: '',
       password: '',
@@ -37,9 +38,33 @@ class AuthCard extends Component {
     event.preventDefault();
   };
 
+  async authFn() {
+    let res = null;
+
+    try {
+      if (this.props.authMode === 'signup') {
+        res = await signup(this.state.username, this.state.password);
+      } else if (this.props.authMode === 'signin') {
+        res = await signin(this.state.username, this.state.password);
+      } else {
+        console.error('Unknown auth mode');
+      }
+
+      console.log(res);
+
+      if (res.success && res.token) {
+        saveAuth(res.token);
+        this.props.onAuth();
+      } else {
+        console.error('Auth Error: ', res);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   render() {
-    const { className, title, showPasswordReset, btnText, authFn, onAuth } =
-      this.props;
+    const { className, title, showPasswordReset, btnText } = this.props;
 
     return (
       <div className={`${className}`}>
@@ -60,6 +85,7 @@ class AuthCard extends Component {
                   placeholder="Phone"
                   variant="outlined"
                   type="number"
+                  value={this.state.username}
                   required
                   onChange={this.handleChange('username')}
                 />
@@ -106,15 +132,12 @@ class AuthCard extends Component {
                   color="primary"
                   size="large"
                   fullWidth={true}
-                  onClick={async () => {
-                    try {
-                      const isAuth = await authFn();
-                      console.log('auth complete: ', isAuth);
-                      onAuth(isAuth);
-                    } catch (e) {
-                      console.error(e);
-                    }
-                  }}
+                  /**
+                   * You have to wrap this inside an arrow
+                   * function because of the following reason
+                   * https://stackoverflow.com/questions/45737145/cannot-read-property-onclick-of-undefined-in-react-component
+                   */
+                  onClick={() => this.authFn()}
                 >
                   {btnText}
                 </Button>
@@ -126,5 +149,9 @@ class AuthCard extends Component {
     );
   }
 }
+
+AuthCard.defaultProps = {
+  onAuth: () => {},
+};
 
 export default AuthCard;

@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import './Signup.css';
 import AuthCard from '../../components/AuthCard/AuthCard';
 import { Link } from 'react-router-dom';
-import { signup } from '../../lib/auth';
-import { testVar } from '../../lib/auth';
 
 class Signup extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {};
-    console.log('test var: ', testVar);
+  }
+
+  handleAuth() {
+    window.location.assign('/products/add/');
   }
 
   render() {
@@ -19,10 +20,8 @@ class Signup extends Component {
           title="sign up"
           btnText="sign up"
           className="signupCard"
-          authFn={() => signup('test' + Math.random(), 'test')}
-          onAuth={(res) => {
-            console.log('auth request: ', res);
-          }}
+          authMode="signup"
+          onAuth={this.handleAuth}
         />
         <p className="signupLink">
           Have an account ?<Link to="/login">LOGIN NOW !</Link>
