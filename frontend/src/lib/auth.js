@@ -67,3 +67,8 @@ export const isAuthenticated = () => {
 
   return false;
 };
+
+export const getToken = () => {
+  let cookie = Cookies.get('authToken');
+  return cookie ? cookie : '';
+};
