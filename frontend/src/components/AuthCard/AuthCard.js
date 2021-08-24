@@ -68,7 +68,17 @@ class AuthCard extends Component {
       <div className={`${className}`}>
         <Card className="authCard">
           <CardContent>
-            <form>
+            <form
+              /**
+               * You have to wrap this inside an arrow
+               * function because of the following reason
+               * https://stackoverflow.com/questions/45737145/cannot-read-property-onclick-of-undefined-in-react-component
+               */
+              onSubmit={(e) => {
+                e.preventDefault();
+                this.authFn();
+              }}
+            >
               <Typography
                 className="authCard__title"
                 variant="h5"
@@ -126,16 +136,11 @@ class AuthCard extends Component {
               <div className="authCard__footer">
                 <Button
                   className="authCard__btn"
+                  type="submit"
                   variant="contained"
                   color="primary"
                   size="large"
                   fullWidth={true}
-                  /**
-                   * You have to wrap this inside an arrow
-                   * function because of the following reason
-                   * https://stackoverflow.com/questions/45737145/cannot-read-property-onclick-of-undefined-in-react-component
-                   */
-                  onClick={() => this.authFn()}
                 >
                   {btnText}
                 </Button>
