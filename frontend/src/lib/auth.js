@@ -59,7 +59,7 @@ export const saveAuth = (token) => {
 };
 
 export const isAuthenticated = () => {
-  const authToken = Cookies.get('auth');
+  const authToken = Cookies.get('authToken');
 
   if (authToken) {
     return authToken;
