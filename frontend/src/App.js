@@ -14,6 +14,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import { Container, createTheme } from '@material-ui/core';
 import AddProduct from './pages/AddProduct/AddProduct';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 function App() {
   const theme = createTheme({
@@ -38,9 +39,9 @@ function App() {
               <Route path="/signup/">
                 <Signup />
               </Route>
-              <Route path="/products/add/">
+              <PrivateRoute path="/products/add/">
                 <AddProduct />
-              </Route>
+              </PrivateRoute>
             </Switch>
           </Router>
         </ThemeProvider>
