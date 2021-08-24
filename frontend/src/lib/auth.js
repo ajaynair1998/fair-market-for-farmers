@@ -14,9 +14,9 @@ export const signup = (username, password) => {
       password,
     })
     .then((res) => {
-      if (res.data.success) {
+      if (res.data.reply.success) {
         return {
-          success: res.data.success,
+          success: res.data.reply.success,
           token: res.data.reply.token.token,
           expires: res.data.reply.token.expires,
         };

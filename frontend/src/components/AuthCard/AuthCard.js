@@ -50,8 +50,6 @@ class AuthCard extends Component {
         console.error('Unknown auth mode');
       }
 
-      console.log(res);
-
       if (res.success && res.token) {
         saveAuth(res.token);
         this.props.onAuth();
