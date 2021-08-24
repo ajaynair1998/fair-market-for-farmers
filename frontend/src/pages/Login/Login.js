@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './Login.css';
 import AuthCard from '../../components/AuthCard/AuthCard';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
+import { isAuthenticated } from '../../lib/auth';
 
 class Login extends Component {
   /**
@@ -11,14 +12,20 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    // bind this.history so that this can be used in
+    // child components
+    this.handleAuth = this.handleAuth.bind(this);
   }
 
   handleAuth() {
-    window.location.assign('/products/add/');
+    this.props.history.push('/products/add/');
   }
 
   render() {
-    return (
+    return isAuthenticated() ? (
+      <Redirect to="/products/add/" />
+    ) : (
       <div className="loginPage">
         <AuthCard
           title="Login"
@@ -36,4 +43,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
