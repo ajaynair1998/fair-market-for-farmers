@@ -15,8 +15,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import './AddProduct.css';
 
 class AddProduct extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       doh: new Date(),
       productImgInput: null,
