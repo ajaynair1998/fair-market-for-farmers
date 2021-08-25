@@ -1,16 +1,12 @@
-  .mapsContainer
-    {
-        border: 2px solid grey;
-        border-radius: 6px;
-        height:600px !important;
-        width:800px !important;
-        display: flex;
-        flex-direction: row;
-        /* align-items: center; */
-        justify-content: center;
-        /* position: relative; */
-        top:20px;
-       
-       
-        
-    }
+.mapContainer{
+   /* border: 2px solid grey; */
+  border-radius: 6px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top:1rem;
+  margin-bottom:0rem;
+}

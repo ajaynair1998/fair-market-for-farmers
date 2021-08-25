@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  TextField,
-  Typography,
-} from '@material-ui/core';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import
+  {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    TextField,
+    Typography,
+  } from '@material-ui/core';
+import
+  {
+    KeyboardDatePicker,
+    MuiPickersUtilsProvider,
+  } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import './AddProduct.css';
 
-class AddProduct extends Component {
-  constructor(props) {
+// import google map
+import Map from '../../components/googleMap/dragableLocation'
+
+class AddProduct extends Component
+{
+  constructor(props)
+  {
     super(props);
     this.state = {
       doh: new Date(),
@@ -24,15 +31,18 @@ class AddProduct extends Component {
     };
   }
 
-  handleImgSelect(event) {
+  handleImgSelect(event)
+  {
     const imgFile = new FileReader();
     imgFile.readAsDataURL(event.target.files[0]);
-    imgFile.onload = (event) => {
+    imgFile.onload = (event) =>
+    {
       this.setState({ productImg: event.target.result });
     };
   }
 
-  render() {
+  render()
+  {
     const { className } = this.props;
 
     return (
@@ -102,6 +112,12 @@ class AddProduct extends Component {
                 type="number"
                 variant="outlined"
               />
+              <div className='mapTopContainer'>
+                <p>Select Location</p>
+                <Map />
+                </div>
+
+
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                   inputVariant="outlined"
@@ -109,7 +125,8 @@ class AddProduct extends Component {
                   label="Date Of Harvest"
                   format="dd/MM/yyyy"
                   value={this.state.doh}
-                  onChange={(date) => {
+                  onChange={(date) =>
+                  {
                     this.setState({ doh: date });
                   }}
                   KeyboardButtonProps={{

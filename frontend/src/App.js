@@ -16,8 +16,7 @@ import { Container, createTheme } from '@material-ui/core';
 import AddProduct from './pages/AddProduct/AddProduct';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
-// import google map
-import Map from './components/googleMap/dragableLocation'
+
 
 function App() {
   const theme = createTheme({
@@ -43,10 +42,7 @@ function App() {
                 <Signup />
               </Route>
               
-              {/* Debug */}
-              <Route path="/maps/">
-                <Map />
-              </Route>
+             
 
               <PrivateRoute path="/products/add/">
                 <AddProduct />

@@ -10,9 +10,16 @@ const googleMapsApi = process.env.REACT_APP_MAPS_API_KEY
 
 const mapStyles =
 {
+   
     width: '100%',
-    height: '100%'
+    height: '100%',
+    
 }
+
+const containerStyle = {
+  maxWidth: "450px",
+  maxHeight: "350px"
+ };
 
 export class MapContainer extends React.Component
 {
@@ -55,10 +62,13 @@ export class MapContainer extends React.Component
     render()
     {
         return (
+            <div className='mapContainer'>
             <Map
+                
                 google={this.props.google}
                 zoom={5}
                 style={mapStyles}
+                containerStyle={containerStyle}
                 initialCenter={
                     this.state.activeMarker
                 }
@@ -71,6 +81,7 @@ export class MapContainer extends React.Component
                 />
 
             </Map>
+            </div>
         );
     }
 
