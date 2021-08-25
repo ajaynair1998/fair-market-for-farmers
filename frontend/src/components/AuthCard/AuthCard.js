@@ -92,7 +92,7 @@ class AuthCard extends Component {
                   label="Phone"
                   placeholder="Phone"
                   variant="outlined"
-                  type="number"
+                  type="text"
                   value={this.state.username}
                   required
                   onChange={this.handleChange('username')}
