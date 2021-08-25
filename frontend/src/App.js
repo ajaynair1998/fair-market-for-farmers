@@ -7,14 +7,15 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { StylesProvider } from '@material-ui/styles';
+import { Container, createTheme } from '@material-ui/core';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import './App.css';
 
 // importing pages
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
-import { Container, createTheme } from '@material-ui/core';
 import AddProduct from './pages/AddProduct/AddProduct';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
   const theme = createTheme({
@@ -25,10 +26,11 @@ function App() {
     },
   });
   return (
-    <Container maxWidth="xs">
-      <StylesProvider injectFirst>
-        <ThemeProvider theme={theme}>
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Container maxWidth="xs">
           <Router>
+            <Navbar />
             <Switch>
               <Route exact path="/">
                 <Redirect to="/login/" />
@@ -44,9 +46,9 @@ function App() {
               </PrivateRoute>
             </Switch>
           </Router>
-        </ThemeProvider>
-      </StylesProvider>
-    </Container>
+        </Container>
+      </ThemeProvider>
+    </StylesProvider>
   );
 }
 
