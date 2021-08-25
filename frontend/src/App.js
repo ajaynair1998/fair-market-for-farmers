@@ -17,7 +17,7 @@ import AddProduct from './pages/AddProduct/AddProduct';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 // import google map
-import Map from './components/googleMap/index'
+import Map from './components/googleMap/dragableLocation'
 
 function App() {
   const theme = createTheme({
