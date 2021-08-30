@@ -16,6 +16,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import AddProduct from './pages/AddProduct/AddProduct';
 import Navbar from './components/Navbar/Navbar';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 
 
@@ -42,6 +43,9 @@ function App() {
               </Route>
               <Route path="/signup/">
                 <Signup />
+              </Route>
+              <Route path='/dashboard/'>
+                <Dashboard/>
               </Route>
               
              
