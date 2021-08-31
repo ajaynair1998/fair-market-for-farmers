@@ -19,6 +19,7 @@ import Navbar from './components/Navbar/Navbar';
 
 
 
+
 function App() {
   const theme = createTheme({
     palette: {
@@ -42,8 +43,7 @@ function App() {
               </Route>
               <Route path="/signup/">
                 <Signup />
-              </Route>
-              
+              </Route>              
              
 
               <PrivateRoute path="/products/add/">
