@@ -50,6 +50,10 @@ export const signin = (username, password) => {
     });
 };
 
+export const signout = async () => {
+  Cookies.remove('authToken');
+};
+
 export const saveAuth = (token) => {
   Cookies.set('authToken', token, {
     expires: 1,

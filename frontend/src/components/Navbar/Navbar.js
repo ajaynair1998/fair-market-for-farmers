@@ -38,6 +38,10 @@ class StyledAppbar extends Component {
           label: 'Orders',
           href: '/orders/',
         },
+        {
+          label: 'Logout',
+          href: '/logout/',
+        },
       ],
     };
   }
