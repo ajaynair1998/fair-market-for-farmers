@@ -83,6 +83,7 @@ class StyledAppbar extends Component {
                     href={item.href}
                     onClick={(e) => {
                       e.preventDefault();
+                      this.setState({ isDrawerOpen: false });
                       history.push(item.href);
                     }}
                   >

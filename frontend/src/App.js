@@ -16,8 +16,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import AddProduct from './pages/AddProduct/AddProduct';
 import Navbar from './components/Navbar/Navbar';
-
-
+import Profile from './pages/Profile/Profile';
 
 
 function App() {
@@ -43,11 +42,12 @@ function App() {
               </Route>
               <Route path="/signup/">
                 <Signup />
-              </Route>              
-             
-
+              </Route>
               <PrivateRoute path="/products/add/">
                 <AddProduct />
+              </PrivateRoute>
+              <PrivateRoute path="/profile/">
+                <Profile />
               </PrivateRoute>
             </Switch>
           </Router>
