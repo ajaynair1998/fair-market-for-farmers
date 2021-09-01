@@ -1,5 +1,5 @@
 import React from 'react'
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react'
 
 import './dragableLocation.css'
 
@@ -10,16 +10,16 @@ const googleMapsApi = process.env.REACT_APP_MAPS_API_KEY
 
 const mapStyles =
 {
-   
+
     width: '100%',
     height: '100%',
-    
+
 }
 
 const containerStyle = {
-  maxWidth: "450px",
-  maxHeight: "350px"
- };
+    maxWidth: "450px",
+    maxHeight: "350px"
+};
 
 export class MapContainer extends React.Component
 {
@@ -44,43 +44,53 @@ export class MapContainer extends React.Component
 
 
 
-    onMarkerDragEnd = (e) =>
+
+    onMarkerDragEnd = (coord) =>
     {
-        const lat = e.latLng.lat();
-        const lng = e.latLng.lng();
-        this.setState(prevState =>
-        {
-            return { ...prevState, activeMarker: { lat: lat, lng: lng } }
-        })
+        let { latLng } = coord
+
+        let lat = latLng.lat()
+        let lng = latLng.lng()
+        console.log(lat, lng)
+
         // when dragging marker this function
         // will change the location value in
         // parent's state
-        // changelocationofparent is a function which is passed down from parent
-        // this.props.changeLocationOfParent({lat:lat,lng:lng})
+        this.props.handleDragPointer(lat, lng)
+
+
+
+
+
     };
 
     render()
     {
         return (
             <div className='mapContainer'>
-            <Map
-                
-                google={this.props.google}
-                zoom={5}
-                style={mapStyles}
-                containerStyle={containerStyle}
-                initialCenter={
-                    this.state.activeMarker
-                }
-            >
-                <Marker
+                <Map
 
-                    name={`lattitude : ${this.state.activeMarker.lat} longitude : ${this.state.activeMarker.lng}`}
-                    onDragEnd={(e) => this.onMarkerDragEnd(e)}
-                    draggable={true}
-                />
+                    google={this.props.google}
+                    zoom={5}
+                    style={mapStyles}
+                    containerStyle={containerStyle}
+                    initialCenter={
+                        this.state.activeMarker
+                    }
 
-            </Map>
+
+
+                >
+                    <Marker
+
+                        name={"Custom Marker"}
+                        onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
+                        draggable={true}
+
+                    />
+
+
+                </Map>
             </div>
         );
     }

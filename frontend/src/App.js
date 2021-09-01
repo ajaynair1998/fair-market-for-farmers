@@ -18,6 +18,7 @@ import AddProduct from './pages/AddProduct/AddProduct';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './pages/Profile/Profile';
 
+
 function App() {
   const theme = createTheme({
     palette: {
