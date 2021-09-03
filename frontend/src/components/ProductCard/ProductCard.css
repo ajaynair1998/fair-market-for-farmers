@@ -1,0 +1,33 @@
+.productCardComp a {
+  text-decoration: none;
+}
+
+.productCard {
+  display: flex;
+  width: 100%;
+}
+
+.productCard__img {
+  width: 40%;
+}
+
+.productCard__content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 0.5rem;
+}
+
+.productCard__name {
+  margin-top: 0.5rem;
+}
+
+.productCard__location {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.price {
+  margin-top: 0.75rem;
+}
