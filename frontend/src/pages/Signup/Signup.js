@@ -15,7 +15,7 @@ class Signup extends Component {
   }
 
   handleAuth() {
-    this.props.history.push('/products/add/');
+    this.props.history.push('/');
   }
 
   render() {

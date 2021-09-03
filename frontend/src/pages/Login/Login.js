@@ -19,12 +19,12 @@ class Login extends Component {
   }
 
   handleAuth() {
-    this.props.history.push('/products/add/');
+    this.props.history.push('/');
   }
 
   render() {
     return isAuthenticated() ? (
-      <Redirect to="/products/add/" />
+      <Redirect to="/" />
     ) : (
       <div className="loginPage">
         <AuthCard
