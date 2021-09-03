@@ -9,6 +9,7 @@
   height: 15rem;
   width: 100%;
   background: center/cover url('../../assets/img/dashboardCover.png');
+  z-index: 0;
 }
 
 .dashboard__cover::before {
@@ -20,4 +21,23 @@
   height: 100%;
   background: black;
   opacity: 60%;
+}
+
+.dashboard__content {
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard__title {
+  color: white;
+  text-align: center;
+}
+
+.itemsList {
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.itemsList__item {
+  margin-top: 1rem;
 }

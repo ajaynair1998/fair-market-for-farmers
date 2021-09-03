@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { StylesProvider } from '@material-ui/styles';
 import { Container, createTheme } from '@material-ui/core';
@@ -25,6 +20,9 @@ function App() {
     palette: {
       primary: {
         main: '#6200EE',
+      },
+      success: {
+        main: '#3CC26A',
       },
     },
   });
