@@ -18,6 +18,7 @@ import AddProduct from './pages/AddProduct/AddProduct';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './pages/Profile/Profile';
 import Logout from './pages/Logout/Logout';
+import Home from './pages/Home/Home';
 
 function App() {
   const theme = createTheme({
@@ -34,9 +35,6 @@ function App() {
           <Router>
             <Navbar />
             <Switch>
-              <Route exact path="/">
-                <Redirect to="/login/" />
-              </Route>
               <Route exact path="/logout">
                 <Logout />
               </Route>
@@ -46,6 +44,9 @@ function App() {
               <Route path="/signup/">
                 <Signup />
               </Route>
+              <PrivateRoute exact path="/">
+                <Home />
+              </PrivateRoute>
               <PrivateRoute path="/products/add/">
                 <AddProduct />
               </PrivateRoute>
