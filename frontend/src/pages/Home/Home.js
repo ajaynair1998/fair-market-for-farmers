@@ -6,7 +6,7 @@ import { Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import Searchbar from '../../components/Searchbar/Searchbar';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
-const products = [
+let products = [
   {
     id: 12,
     name: 'Lorem Ipsum',

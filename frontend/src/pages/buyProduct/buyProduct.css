@@ -1,0 +1,13 @@
+.buyProduct_Content{
+    display:flex;
+    flex-direction: column;
+    padding:18.5px;
+}
+
+.productCard__img{
+    height:200px;
+    width:100%;
+    margin-top: 1em;
+    border-radius: 15px;
+}
+

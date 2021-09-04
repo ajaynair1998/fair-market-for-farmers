@@ -14,6 +14,7 @@ import Navbar from './components/Navbar/Navbar';
 import Profile from './pages/Profile/Profile';
 import Logout from './pages/Logout/Logout';
 import Home from './pages/Home/Home';
+import BuyProduct  from './pages/buyProduct/buyProduct';
 
 function App() {
   const theme = createTheme({
@@ -51,6 +52,9 @@ function App() {
               <PrivateRoute path="/profile/">
                 <Profile />
               </PrivateRoute>
+              <PrivateRoute path="/products/:id">
+                    <BuyProduct/>
+                </PrivateRoute>
             </Switch>
           </Router>
         </Container>
