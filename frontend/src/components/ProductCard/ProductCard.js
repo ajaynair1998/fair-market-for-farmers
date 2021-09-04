@@ -9,25 +9,25 @@ class ProductCard extends Component {
     const { name, img, price, location, className, id } = this.props;
 
     return (
-      <div className="productCardComp">
+      <div className="productCardCompComp">
         <Link to={`/products/${id}`}>
-          <Card className={`productCard ${className}`} variant="outlined">
+          <Card className={`productCardComp ${className}`} variant="outlined">
             <CardMedia
-              className="productCard__img"
+              className="productCardComp__img"
               image={img}
               title={`Product image of ${name.toLowerCase()}`}
             />
-            <CardContent className="productCard__content">
+            <CardContent className="productCardComp__content">
               <Typography
                 variant="overline"
                 component="div"
-                className="productCard__location"
+                className="productCardComp__location"
               >
                 <LocationOn />
                 <span>{location}</span>
               </Typography>
               <Typography
-                className="productCard__name"
+                className="productCardComp__name"
                 variant="h6"
                 component="p"
               >

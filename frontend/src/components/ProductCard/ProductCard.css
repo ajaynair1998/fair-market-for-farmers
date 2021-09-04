@@ -2,27 +2,27 @@
   text-decoration: none;
 }
 
-.productCard {
+.productCardComp {
   display: flex;
   width: 100%;
 }
 
-.productCard__img {
+.productCardComp__img {
   width: 40%;
 }
 
-.productCard__content {
+.productCardComp__content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   margin-left: 0.5rem;
 }
 
-.productCard__name {
+.productCardComp__name {
   margin-top: 0.5rem;
 }
 
-.productCard__location {
+.productCardComp__location {
   display: flex;
   align-items: center;
   text-transform: uppercase;
