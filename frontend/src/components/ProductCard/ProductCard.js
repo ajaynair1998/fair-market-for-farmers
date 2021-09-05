@@ -2,21 +2,24 @@ import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 import { LocationOn } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import './ProductCard.css';
+// @ts-ignore
+import placeholder from '../../assets/img/placeholder.png';
+import './ProductCard.scss';
 
 class ProductCard extends Component {
   render() {
     const { productName, image, price, location, className, _id } = this.props;
 
     return (
-      <div className="productCardCompComp">
+      <div className="productCardComp">
         <Link to={`/products/${_id}`}>
           <Card className={`productCardComp ${className}`} variant="outlined">
             <CardMedia
-              className="productCardComp__img"
-              image={image}
+              className={`productCardComp__img ${
+                !image && 'productCardComp__img--placeholder'
+              }`}
+              image={image || placeholder}
               title={`Product image of ${productName.toLowerCase()}`}
-
             />
             <CardContent className="productCardComp__content">
               <Typography
