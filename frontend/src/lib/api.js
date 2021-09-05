@@ -9,3 +9,15 @@ export const api = axios.create({
     Authorization: Cookies.get('authToken'),
   },
 });
+
+// pass auth token with every request
+api.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = Cookies.get('authToken');
+
+    return config;
+  },
+  (error) => {
+    console.error(error);
+  }
+);

@@ -1,5 +1,6 @@
 import { api } from './api';
 import Cookies from 'js-cookie';
+import { getProfile, getProfileLocal } from './profile';
 
 /**
  * Register user
@@ -41,6 +42,15 @@ export const signin = (username, password) => {
       username,
       password,
     })
+    .then(async (res) => {
+      saveAuth(res.data.authorisation.token);
+
+      const profile = await getProfile();
+      localStorage.setItem('profile', JSON.stringify(profile.details));
+      console.log('local profile: ', getProfileLocal());
+
+      return res;
+    })
     .then((res) => {
       return {
         success: res.data.success,
@@ -68,6 +78,14 @@ export const isAuthenticated = () => {
   if (authToken) {
     return authToken;
   }
+
+  return false;
+};
+
+export const isAdmin = () => {
+  if (!isAuthenticated()) return false;
+
+  if (getProfileLocal().role === 'farmer') return true;
 
   return false;
 };
