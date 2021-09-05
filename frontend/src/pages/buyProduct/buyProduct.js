@@ -16,7 +16,7 @@ class BuyProduct extends Component
         super(props)
         this.state = { product: "", selectedStock: 0, loading: true }
 
-        // custom
+
         this.handleChangeSlider = this.handleChangeSlider.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -25,28 +25,23 @@ class BuyProduct extends Component
     {
         try
         {
-            // for production
+
             let currentProductId = this.props.match.params.id
 
             // debug
             // currentProductId = "612db0a048220aaf9f657e5a"
             let response = await api.post('/productDetails', { "productId": currentProductId })
-
-
             let product = response.data.product
             console.log(product)
             this.setState(prevState =>
             {
                 return { ...prevState, product: product, loading: false }
             })
-
         }
         catch (err)
         {
             console.log(err)
         }
-
-
     }
 
     handleChangeSlider(e, value)
@@ -74,9 +69,6 @@ class BuyProduct extends Component
                 let response = await api.post('/buy', requestObject)
                 // console.log(response)
                 this.setState(prevState => { return { ...prevState, loading: false } })
-
-
-
             }
         }
         catch (err)

@@ -25,7 +25,7 @@ class ProductCard extends Component {
                 className="productCardComp__location"
               >
                 <LocationOn />
-                <span>{location}</span>
+                {/* <span>{location}</span> */}
               </Typography>
               <Typography
                 className="productCardComp__name"
