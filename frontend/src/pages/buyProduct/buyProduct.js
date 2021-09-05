@@ -124,7 +124,6 @@ class BuyProduct extends Component
                                 aria-labelledby="discrete-slider"
                                 valueLabelDisplay="auto"
                                 step={1}
-                                marks
                                 min={0}
                                 max={this.state.product.stock}
                             />
