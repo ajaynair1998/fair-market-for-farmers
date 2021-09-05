@@ -6,6 +6,8 @@ import
     Grid, Slider
 } from '@material-ui/core';
 import { api } from '../../lib/api';
+// @ts-ignore
+import placeholder from '../../assets/img/placeholder.png';
 import './buyProduct.css'
 
 
@@ -29,7 +31,8 @@ class BuyProduct extends Component
             let currentProductId = this.props.match.params.id
             let response = await api.post('/productDetails', { "productId": currentProductId })
             let product = response.data.product
-            console.log(product)
+            // make sure that the stock is more than 0
+            product.stock = product.stock > 0 ? product.stock : 0;
             this.setState({product: product, loading: false })
         }
         catch (err)
@@ -77,7 +80,7 @@ class BuyProduct extends Component
 
                             <CardMedia
                                 className="productCard__img"
-                                image={this.state.product.image}
+                                image={this.state.product.image || placeholder}
                                 title={`Product image of ${this.state.product.productName.toLowerCase()}`}
                             />
                             <Grid container spacing={3} justifyContent="space-between"
