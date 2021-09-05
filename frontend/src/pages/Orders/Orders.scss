@@ -1,0 +1,33 @@
+.ordersPage {
+  .ordersList {
+    margin-top: 2rem;
+
+    &Item {
+      margin-top: 1rem;
+
+      &__name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      &__id {
+        color: grey;
+        margin-top: 0.25rem;
+      }
+
+      &__price {
+        font-weight: bold;
+        font-size: 1.3rem;
+        margin: 0;
+      }
+
+      &__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+      }
+    }
+  }
+}

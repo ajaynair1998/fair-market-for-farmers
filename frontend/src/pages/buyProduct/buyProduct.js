@@ -59,9 +59,9 @@ class BuyProduct extends Component
             {
                 this.setState(prevState => { return { ...prevState, loading: true } })
                 let requestObject = { stock: this.state.selectedStock, product: this.state.product }
-                let response = await api.post('/buy', requestObject)
-                // console.log(response)
-                this.setState(prevState => { return { ...prevState, loading: false } })
+                await api.post('/buy', requestObject)
+
+                this.props.history.push('/orders/');
             }
         }
         catch (err)

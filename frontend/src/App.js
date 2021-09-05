@@ -15,6 +15,7 @@ import Profile from './pages/Profile/Profile';
 import Logout from './pages/Logout/Logout';
 import Home from './pages/Home/Home';
 import BuyProduct  from './pages/buyProduct/buyProduct';
+import Orders from './pages/Orders/Orders';
 
 function App() {
   const theme = createTheme({
@@ -53,8 +54,11 @@ function App() {
                 <Profile />
               </PrivateRoute>
               <PrivateRoute path="/products/:id">
-                    <BuyProduct/>
-                </PrivateRoute>
+                <BuyProduct/>
+              </PrivateRoute>
+              <PrivateRoute>
+                <Orders />
+              </PrivateRoute>
             </Switch>
           </Router>
         </Container>
