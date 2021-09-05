@@ -285,14 +285,15 @@ class MongoDbClass
         try
         {
             await this.connectionSuccessfull
-
+            console.log(productId)
 
             // find and modify the stock of the product
             // by reducing the stock bought by the buyer
-            let query = await productModel.findOneAndUpdate(productId, { $inc: { "stock": -stockBought } }, {
-                new: true,
-                useFindAndModify: false
-            })
+            let query =await productModel.findById(productId)
+            query.stock=query.stock-stockBought
+            
+           
+            await query.save()
             // DEBUG
             // console.log(query)
             if (query) return true
