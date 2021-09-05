@@ -138,7 +138,7 @@ router.get('/dashboard', async (req, res) =>
     let userName = await verifyAndRetrieveUser(token)
 
     // if not authorised
-    if (!userName) res.status(404).json({ success: false, msg: "you are unauthorised" })
+    if (!userName) res.status(401).json({ success: false, msg: "you are unauthorised" })
     else
     {
       // if authorised

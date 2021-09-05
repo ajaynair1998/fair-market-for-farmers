@@ -34,7 +34,7 @@ class Home extends Component
     {
       let response = await api.get('/dashboard')
       console.log(response)
-      this.setState(prevState =>
+      this.setState(() =>
       {
         return { loading: false, products: response.data.dashBoardProducts }
       })

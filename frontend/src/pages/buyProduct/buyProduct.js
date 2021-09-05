@@ -27,9 +27,6 @@ class BuyProduct extends Component
         {
 
             let currentProductId = this.props.match.params.id
-
-            // debug
-            // currentProductId = "612db0a048220aaf9f657e5a"
             let response = await api.post('/productDetails', { "productId": currentProductId })
             let product = response.data.product
             console.log(product)
@@ -47,7 +44,6 @@ class BuyProduct extends Component
     handleChangeSlider(e, value)
     {
         let changedValue = value
-        // console.log(this.state)
         this.setState(prevState =>
         {
             return { ...prevState, selectedStock: changedValue }
@@ -58,10 +54,7 @@ class BuyProduct extends Component
     {
         try
         {
-            if (this.state.selectedStock === 0) 
-            {
-                // skip
-            }
+            if (this.state.selectedStock === 0) {}
             else
             {
                 this.setState(prevState => { return { ...prevState, loading: true } })
