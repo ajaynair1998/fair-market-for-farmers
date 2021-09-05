@@ -14,6 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Drawer } from '@material-ui/core';
 import { withRouter, Link } from 'react-router-dom';
+import { isAdmin, isAuthenticated } from '../../lib/auth';
 
 class StyledAppbar extends Component {
   constructor(props) {
@@ -37,10 +38,6 @@ class StyledAppbar extends Component {
         {
           label: 'Orders',
           href: '/orders/',
-        },
-        {
-          label: 'Logout',
-          href: '/logout/',
         },
       ],
     };
@@ -95,6 +92,49 @@ class StyledAppbar extends Component {
                   </ListItem>
                 );
               })}
+
+              {isAdmin() && (
+                <ListItem
+                  button
+                  component="a"
+                  href="/products/add/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({ isDrawerOpen: false });
+                    history.push('/products/add/');
+                  }}
+                >
+                  <ListItemText primary="Add Products" />
+                </ListItem>
+              )}
+
+              {isAuthenticated() ? (
+                <ListItem
+                  button
+                  component="a"
+                  href="/logout/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({ isDrawerOpen: false });
+                    history.push('/logout/');
+                  }}
+                >
+                  <ListItemText primary="Logout" />
+                </ListItem>
+              ) : (
+                <ListItem
+                  button
+                  component="a"
+                  href="/login/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({ isDrawerOpen: false });
+                    history.push('/login/');
+                  }}
+                >
+                  <ListItemText primary="Login" />
+                </ListItem>
+              )}
             </List>
           </div>
         </Drawer>

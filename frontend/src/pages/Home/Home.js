@@ -5,49 +5,37 @@ import dashboardCover from '../../assets/img/dashboardCover.png';
 import { Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import Searchbar from '../../components/Searchbar/Searchbar';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { api } from '../../lib/api'
+import { api } from '../../lib/api';
 
-
-
-class Home extends Component
-{
-  constructor(props)
-  {
+class Home extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
-      activeTab: 0, loading: true
+      activeTab: 0,
+      loading: true,
     };
 
     this.handleTabChange = this.handleTabChange.bind(this);
-
   }
 
-  handleTabChange(_, newValue)
-  {
+  handleTabChange(_, newValue) {
     this.setState({ activeTab: newValue });
   }
 
-  async componentDidMount()
-  {
-    try
-    {
-      let response = await api.get('/dashboard')
-      console.log(response)
-      this.setState(() =>
-      {
-        return { loading: false, products: response.data.dashBoardProducts }
-      })
+  async componentDidMount() {
+    try {
+      let response = await api.get('/dashboard');
+      console.log('dashboard: ', response);
+      this.setState(() => {
+        return { loading: false, products: response.data.dashBoardProducts };
+      });
+    } catch (err) {
+      console.log(err);
     }
-    catch (err)
-    {
-      console.log(err)
-    }
-
   }
 
-  render()
-  {
+  render() {
     return !this.state.loading ? (
       <div className="dashboard">
         <div className="dashboard__content">
@@ -82,7 +70,11 @@ class Home extends Component
         </div>
         <div className="dashboard__cover"></div>
       </div>
-    ) : <div><h1>Loading</h1></div>
+    ) : (
+      <div>
+        <h1>Loading</h1>
+      </div>
+    );
   }
 }
 
