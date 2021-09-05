@@ -52,7 +52,7 @@ class Orders extends Component {
                       <span>Date: </span>
                       {format(new Date(order.dateOfTransaction), 'dd-MM-yyyy')}
                     </div>
-                    <p className="ordersListItem__price">Rs. {order.price}</p>
+                    <p className="ordersListItem__price">Rs. {Number(order.price) * Number(order.stockBought)}</p>
                   </div>
                 </CardContent>
               </Card>
