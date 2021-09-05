@@ -85,7 +85,9 @@ export const isAuthenticated = () => {
 export const isAdmin = () => {
   if (!isAuthenticated()) return false;
 
-  if (getProfileLocal().role === 'farmer') return true;
+  const profile = getProfileLocal();
+
+  if (profile && (profile.role === 'farmer')) return true;
 
   return false;
 };
