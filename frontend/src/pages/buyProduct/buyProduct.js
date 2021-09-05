@@ -14,7 +14,7 @@ class BuyProduct extends Component
     constructor(props)
     {
         super(props)
-        this.state = { product: "", selectedStock: 0, loading: true }
+        this.state = { product: {}, selectedStock: 0, loading: true }
 
 
         this.handleChangeSlider = this.handleChangeSlider.bind(this)
@@ -124,7 +124,6 @@ class BuyProduct extends Component
                             <Slider
                                 defaultValue={0}
                                 value={this.state.selectedStock}
-                                onDragStop={this.handleChangeSlider}
                                 onChange={this.handleChangeSlider}
                                 aria-labelledby="discrete-slider"
                                 valueLabelDisplay="auto"
@@ -132,8 +131,6 @@ class BuyProduct extends Component
                                 marks
                                 min={0}
                                 max={this.state.product.stock}
-
-
                             />
 
                             <Grid container spacing={3} justifyContent="space-between"
