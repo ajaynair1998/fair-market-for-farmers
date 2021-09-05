@@ -6,16 +6,17 @@ import './ProductCard.css';
 
 class ProductCard extends Component {
   render() {
-    const { name, img, price, location, className, id } = this.props;
+    const { productName, image, price, location, className, _id } = this.props;
 
     return (
       <div className="productCardCompComp">
-        <Link to={`/products/${id}`}>
+        <Link to={`/products/${_id}`}>
           <Card className={`productCardComp ${className}`} variant="outlined">
             <CardMedia
               className="productCardComp__img"
-              image={img}
-              title={`Product image of ${name.toLowerCase()}`}
+              image={image}
+              title={`Product image of ${productName.toLowerCase()}`}
+
             />
             <CardContent className="productCardComp__content">
               <Typography
@@ -31,7 +32,7 @@ class ProductCard extends Component {
                 variant="h6"
                 component="p"
               >
-                {name}
+                {productName}
               </Typography>
               <Typography variant="h4" component="div" className="price">
                 <span className="price__currency">Rs. </span>

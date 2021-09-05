@@ -5,59 +5,50 @@ import dashboardCover from '../../assets/img/dashboardCover.png';
 import { Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import Searchbar from '../../components/Searchbar/Searchbar';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import { api } from '../../lib/api'
 
-let products = [
-  {
-    id: 12,
-    name: 'Lorem Ipsum',
-    location: 'Kerala, India',
-    img: dashboardCover,
-    price: 50,
-    doh: new Date(),
-  },
-  {
-    id: 45,
-    name: 'Lorem Ipsum',
-    location: 'Kerala, India',
-    img: dashboardCover,
-    price: 50,
-    doh: new Date(),
-  },
-  {
-    id: 34,
-    name: 'Lorem Ipsum',
-    location: 'Kerala, India',
-    img: dashboardCover,
-    price: 50,
-    doh: new Date(),
-  },
-  {
-    id: 76,
-    name: 'Lorem Ipsum',
-    location: 'Kerala, India',
-    img: dashboardCover,
-    price: 50,
-    doh: new Date(),
-  },
-];
 
-class Home extends Component {
-  constructor(props) {
+
+class Home extends Component
+{
+  constructor(props)
+  {
     super(props);
 
     this.state = {
-      activeTab: 0,
+      activeTab: 0, loading: true
     };
 
     this.handleTabChange = this.handleTabChange.bind(this);
+
   }
 
-  handleTabChange(_, newValue) {
+  handleTabChange(_, newValue)
+  {
     this.setState({ activeTab: newValue });
   }
 
-  render() {
-    return (
+  async componentDidMount()
+  {
+    try
+    {
+      let response = await api.get('/dashboard')
+      console.log(response)
+      this.setState(prevState =>
+      {
+        return { loading: false, products: response.data.dashBoardProducts }
+      })
+    }
+    catch (err)
+    {
+      console.log(err)
+    }
+
+  }
+
+  render()
+  {
+    return !this.state.loading ? (
       <div className="dashboard">
         <div className="dashboard__content">
           <Typography className="dashboard__title" variant="h6" component="h1">
@@ -79,9 +70,9 @@ class Home extends Component {
             </Tabs>
             <div className="itemsList__items">
               {this.state.activeTab === 0 &&
-                products.map((product) => (
+                this.state.products.map((product) => (
                   <ProductCard
-                    key={product.id}
+                    key={product._id}
                     className="itemsList__item"
                     {...product}
                   />
@@ -91,7 +82,7 @@ class Home extends Component {
         </div>
         <div className="dashboard__cover"></div>
       </div>
-    );
+    ) : <div><h1>Loading</h1></div>
   }
 }
 
