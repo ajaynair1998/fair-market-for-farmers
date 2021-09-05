@@ -22,14 +22,14 @@ class ProductCard extends Component {
               title={`Product image of ${productName.toLowerCase()}`}
             />
             <CardContent className="productCardComp__content">
-              <Typography
+              {/* <Typography
                 variant="overline"
                 component="div"
                 className="productCardComp__location"
               >
                 <LocationOn />
-                {/* <span>{location}</span> */}
-              </Typography>
+                <span>{location}</span>
+              </Typography> */}
               <Typography
                 className="productCardComp__name"
                 variant="h6"

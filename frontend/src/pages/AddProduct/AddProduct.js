@@ -5,6 +5,7 @@ import
   Card,
   CardActions,
   CardContent,
+  LinearProgress,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -14,14 +15,10 @@ import
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import './AddProduct.css';
-
-
+import './AddProduct.scss';
 import Map from '../../components/googleMap/dragableLocation'
 import { api } from '../../lib/api'
-
-
-
+import { withRouter } from 'react-router-dom';
 
 class AddProduct extends Component
 {
@@ -32,7 +29,8 @@ class AddProduct extends Component
       doh: new Date(),
       productImgInput: null,
       productImg: '',
-      product: { image: "", activeMarker: null }
+      product: { image: "", activeMarker: null },
+      loader: false
     };
 
     // functions
@@ -51,21 +49,21 @@ class AddProduct extends Component
       productObject.image = event.target.result
 
 
-      this.setState((prevState) => 
+      this.setState((prevState) =>
       {
         return { ...prevState, product: productObject }
       });
     };
   }
 
-  // pass this onto the map componant so that it can change the 
+  // pass this onto the map componant so that it can change the
   // location value in this components state
   handleDragPointer(lat, lng)
   {
 
     let productObject = this.state.product
     productObject.location = JSON.stringify({ lat: lat, lng: lng })
-    this.setState(prevState => 
+    this.setState(prevState =>
     {
       return { ...prevState, product: productObject }
     })
@@ -96,9 +94,11 @@ class AddProduct extends Component
   {
     try
     {
-      console.log(this.state.product)
+      this.setState({loader: true});
+
       let response = await api.post('/product', { product: this.state.product })
       console.log(response)
+      this.props.history.push('/');
     }
     catch (err)
     {
@@ -112,6 +112,12 @@ class AddProduct extends Component
 
     return (
       <div className={`addProductPage ${className}`}>
+      {this.state.loader &&
+        <div className="productAddBanner">
+          <Typography variant="h5" component="p">Adding Product</Typography>
+          <LinearProgress style={{width: '80%', marginTop: '1rem'}} />
+        </div>
+      }
         <Card>
           <CardContent>
             <form className="productInps">
@@ -137,10 +143,10 @@ class AddProduct extends Component
                   >
                     Upload
                   </Button>
-                  {this.state.productImg && (
+                  {this.state.product.image && (
                     <img
                       className="imgPicker__preview"
-                      src={this.state.productImg}
+                      src={this.state.product.image}
                       alt="Product"
                     />
                   )}
@@ -228,4 +234,4 @@ class AddProduct extends Component
   }
 }
 
-export default AddProduct;
+export default withRouter(AddProduct);
