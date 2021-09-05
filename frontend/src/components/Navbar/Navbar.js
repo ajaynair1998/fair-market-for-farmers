@@ -32,10 +32,6 @@ class StyledAppbar extends Component {
           href: '/profile/',
         },
         {
-          label: 'Products',
-          href: '/products/',
-        },
-        {
           label: 'Orders',
           href: '/orders/',
         },
@@ -44,7 +40,6 @@ class StyledAppbar extends Component {
   }
   render() {
     const { classes, history } = this.props;
-    console.log(this.props);
     return (
       <>
         <AppBar className={classes.navbar} position="fixed" color="primary">
