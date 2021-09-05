@@ -89,8 +89,8 @@ class AuthCard extends Component {
               <div className="authCard__inputs">
                 <TextField
                   className="authCard__input"
-                  label="Phone"
-                  placeholder="Phone"
+                  label="Username"
+                  placeholder="Username"
                   variant="outlined"
                   type="text"
                   value={this.state.username}
