@@ -30,10 +30,7 @@ class BuyProduct extends Component
             let response = await api.post('/productDetails', { "productId": currentProductId })
             let product = response.data.product
             console.log(product)
-            this.setState(prevState =>
-            {
-                return { ...prevState, product: product, loading: false }
-            })
+            this.setState({product: product, loading: false })
         }
         catch (err)
         {
@@ -44,10 +41,7 @@ class BuyProduct extends Component
     handleChangeSlider(e, value)
     {
         let changedValue = value
-        this.setState(prevState =>
-        {
-            return { ...prevState, selectedStock: changedValue }
-        })
+        this.setState({selectedStock: changedValue})
     }
 
     async handleSubmit()
@@ -57,10 +51,9 @@ class BuyProduct extends Component
             if (this.state.selectedStock === 0) {}
             else
             {
-                this.setState(prevState => { return { ...prevState, loading: true } })
+                this.setState({loading: true});
                 let requestObject = { stock: this.state.selectedStock, product: this.state.product }
                 await api.post('/buy', requestObject)
-
                 this.props.history.push('/orders/');
             }
         }
