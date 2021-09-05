@@ -6,6 +6,8 @@ import
     Grid, Slider
 } from '@material-ui/core';
 import { api } from '../../lib/api';
+// @ts-ignore
+import placeholder from '../../assets/img/placeholder.png';
 import './buyProduct.css'
 
 
@@ -29,11 +31,9 @@ class BuyProduct extends Component
             let currentProductId = this.props.match.params.id
             let response = await api.post('/productDetails', { "productId": currentProductId })
             let product = response.data.product
-            console.log(product)
-            this.setState(prevState =>
-            {
-                return { ...prevState, product: product, loading: false }
-            })
+            // make sure that the stock is more than 0
+            product.stock = product.stock > 0 ? product.stock : 0;
+            this.setState({product: product, loading: false })
         }
         catch (err)
         {
@@ -44,10 +44,7 @@ class BuyProduct extends Component
     handleChangeSlider(e, value)
     {
         let changedValue = value
-        this.setState(prevState =>
-        {
-            return { ...prevState, selectedStock: changedValue }
-        })
+        this.setState({selectedStock: changedValue})
     }
 
     async handleSubmit()
@@ -57,10 +54,9 @@ class BuyProduct extends Component
             if (this.state.selectedStock === 0) {}
             else
             {
-                this.setState(prevState => { return { ...prevState, loading: true } })
+                this.setState({loading: true});
                 let requestObject = { stock: this.state.selectedStock, product: this.state.product }
                 await api.post('/buy', requestObject)
-
                 this.props.history.push('/orders/');
             }
         }
@@ -84,7 +80,7 @@ class BuyProduct extends Component
 
                             <CardMedia
                                 className="productCard__img"
-                                image={this.state.product.image}
+                                image={this.state.product.image || placeholder}
                                 title={`Product image of ${this.state.product.productName.toLowerCase()}`}
                             />
                             <Grid container spacing={3} justifyContent="space-between"
@@ -128,7 +124,6 @@ class BuyProduct extends Component
                                 aria-labelledby="discrete-slider"
                                 valueLabelDisplay="auto"
                                 step={1}
-                                marks
                                 min={0}
                                 max={this.state.product.stock}
                             />
