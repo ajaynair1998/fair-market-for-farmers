@@ -32,7 +32,7 @@ function App() {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Container maxWidth="xs">
-          <Router>
+          <Router basename="/aws-hack">
             <Navbar />
             <Switch>
               <Route exact path="/logout">
