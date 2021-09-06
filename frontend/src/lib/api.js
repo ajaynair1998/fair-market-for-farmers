@@ -1,8 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+// @ts-ignore
+console.log('api url: ', process.env.REACT_APP_API_URL);
+
 export const api = axios.create({
-  baseURL: 'http://localhost:5000/',
+  // @ts-ignore
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
