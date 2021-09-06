@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import { signout } from '../../lib/auth';
+import {withRouter} from 'react-router-dom';
 
 class Logout extends Component {
   constructor(props) {
     super(props);
     signout();
-    window.location.assign('/');
+    props.history.push('/');
   }
 
   render() {
@@ -13,4 +14,4 @@ class Logout extends Component {
   }
 }
 
-export default Logout;
+export default withRouter(Logout);
