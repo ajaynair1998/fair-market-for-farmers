@@ -1,32 +1,19 @@
-const mongoose = require('mongoose')
-
+const mongoose = require("mongoose");
 
 // define new Schema
-let productSchema =
-
-  new mongoose.Schema(
-    {
-      productName: String,
-      smallDescription: String,
-      detailedDescription: String,
-      stock: Number,
-      price: Number,
-      image: String,
-      location: String,
-      date: { type: Date, default: Date.now },
-      userReference: { type: String, default: 'no user id attached' }
-
-
-    }
-  )
+let productSchema = new mongoose.Schema({
+  productName: String,
+  smallDescription: String,
+  detailedDescription: String,
+  stock: Number,
+  price: Number,
+  image: String,
+  location: String,
+  date: { type: Date, default: Date.now },
+  userReference: { type: String, default: "no user id attached" },
+});
 
 // define the model
-const productModel = mongoose.model('product', productSchema)
+const productModel = mongoose.model("product", productSchema);
 
-
-
-
-
-
-
-module.exports = productModel
+module.exports = productModel;
